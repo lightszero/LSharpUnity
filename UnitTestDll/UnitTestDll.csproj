@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7AF5C656-5C65-4BCD-82DB-B9D030132D77}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTestDll</RootNamespace>
+    <AssemblyName>UnitTestDll</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\Test\Library\ScriptAssemblies\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Eviltestor\EvilTestor.cs" />
+    <Compile Include="Eviltestor\test01\Test01.cs" />
+    <Compile Include="Eviltestor\test02\Test02.cs" />
+    <Compile Include="Eviltestor\test03\Test03.cs" />
+    <Compile Include="Eviltestor\test04\Test04.cs" />
+    <Compile Include="Eviltestor\test05\Test05.cs" />
+    <Compile Include="Eviltestor\test06\Test06.cs" />
+    <Compile Include="Eviltestor\test07\Test07.cs" />
+    <Compile Include="Eviltestor\test08\Test08.cs" />
+    <Compile Include="Eviltestor\test09\Test09.cs" />
+    <Compile Include="Eviltestor\test10.cs" />
+    <Compile Include="LightTestor\ExpTest_50.cs" />
+    <Compile Include="LightTestor\ExpTest_60.cs" />
+    <Compile Include="LightTestor\ExpTest_70.cs" />
+    <Compile Include="LightTestor\ExpTest_40.cs" />
+    <Compile Include="LightTestor\ExpTest_30.cs" />
+    <Compile Include="LightTestor\ExpTest_20.cs" />
+    <Compile Include="LightTestor\Perform_01.cs" />
+    <Compile Include="SimU3D\TestU3D.cs" />
+    <Compile Include="SimU3D\TestYield.cs" />
+    <Compile Include="Test0.cs" />
+    <Compile Include="LightTestor\ExpTest_10.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test_ByLynn.cs" />
+    <Compile Include="Test_ByDuskforest.cs" />
+    <Compile Include="test_enum.cs" />
+    <Compile Include="test_RefOut.cs" />
+    <Compile Include="test_string_switch.cs" />
+    <Compile Include="没有实现的IL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Eviltestor\test01\test.txt" />
+    <Content Include="Eviltestor\test02\test.txt" />
+    <Content Include="Eviltestor\test03\test.txt" />
+    <Content Include="Eviltestor\test04\test.txt" />
+    <Content Include="Eviltestor\test05\test.txt" />
+    <Content Include="Eviltestor\test06\test.txt" />
+    <Content Include="Eviltestor\test07\test.txt" />
+    <Content Include="Eviltestor\test08\test.txt" />
+    <Content Include="Eviltestor\test09\test.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy ..\bin\unittestdll.dll ..\test\assets\resources\unittestdll.dll.bytes
+copy ..\bin\unittestdll.pdb ..\test\assets\resources\unittestdll.pdb.bytes</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
