@@ -6,7 +6,7 @@ Library
 obj
 Temp
 bin
-
+*.suo
 # Folder config file
 Desktop.ini
 
