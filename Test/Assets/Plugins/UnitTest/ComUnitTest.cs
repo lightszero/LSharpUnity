@@ -39,10 +39,35 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         GUILayout.BeginHorizontal();
         {
             pos = GUILayout.BeginScrollView(pos);
-            foreach(var t in tests)
+            foreach (var t in tests)
             {
-                GUILayout.Label(t.DeclaringType.Name + ":::" + t.Name);
+                GUILayout.BeginHorizontal();
+                if (t.bSucc)
+                    GUI.contentColor = Color.green;
+                else if (t.bError)
+                    GUI.contentColor = Color.red;
+                else
+                    GUI.contentColor = Color.white;
+                GUILayout.Label(t.ToString());
+                if (GUILayout.Button("Test"))
+                {
+                    try
+                    {
+                        TestOne(t.m, true, false);
+                    }
+                    catch(Exception err)
+                    {
+                        Debug.LogError(CLRSharp.ThreadContext.activeContext.Dump());
+                        Debug.LogError(err.ToString());
+                    }
+                }
+                if (GUILayout.Button("Test No Try"))
+                {
+                    TestOne(t.m, true, true);
+                }
+                GUILayout.EndHorizontal();
             }
+            GUI.contentColor = Color.white;
             GUILayout.EndScrollView();
         }
         {
@@ -58,7 +83,21 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         GUILayout.EndHorizontal();
 
     }
-    List<CLRSharp.IMethod> tests = new List<CLRSharp.IMethod>();
+    class TestItem
+    {
+        public TestItem(CLRSharp.IMethod _m)
+        {
+            this.m = _m;
+        }
+        public CLRSharp.IMethod m;
+        public bool bError = false;
+        public bool bSucc = false;
+        public override string ToString()
+        {
+            return m.DeclaringType.Name + ":::" + m.Name;
+        }
+    }
+    List<TestItem> tests = new List<TestItem>();
     void InitTest()
     {
         tests.Clear();
@@ -94,7 +133,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                     if (mm != null)
                     {
                         if (mm.Name.Contains("UnitTest"))
-                            tests.Add(mm);
+                            tests.Add(new TestItem(mm));
                     }
                 }
                 if (tclr.type_CLRSharp.HasNestedTypes)
@@ -109,7 +148,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                             if (m.ParamList.Count == 0)
                             {
                                 if (m.Name.Contains("UnitTest"))
-                                    tests.Add(m);
+                                    tests.Add(new TestItem(m));
                             }
                         }
                     }
@@ -126,7 +165,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
 
         for (int i = 0; i < tests.Count; i++)
         {
-            Log(i.ToString("D03") + " " + tests[i].DeclaringType.Name + "|" + tests[i].Name);
+            Log(i.ToString("D03") + " " + tests[i].ToString());
         }
         Log_Warning("ListEnd. Count:" + tests.Count);
     }
@@ -146,12 +185,16 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         {
             try
             {
-                TestOne(m, false, false);
+                TestOne(m.m, false, false);
                 finish++;
+                m.bSucc = true;
+                m.bError = false;
             }
             catch (Exception err)
             {
-                Log_Error(m.DeclaringType.Name + ":::" + m.Name + "|||" + err.ToString());
+                m.bError = true;
+                m.bSucc = false;
+                Log_Error(m.ToString() + "|||" + err.ToString());
             }
         }
         Log_Warning("TestAllEnd. Count:" + finish + "/" + tests.Count);
