@@ -1540,12 +1540,20 @@ namespace CLRSharp
                 index = (int)indexobj;
             }
             object _array = stackCalc.Pop();
+            //if (_array is Int64)
             {
                 Int64[] array = _array  as Int64[];
                 var box = ValueOnStack.MakeVBox(NumberType.INT64);
                 box.v64 = array[index];
                 stackCalc.Push(box);
             }
+            //else if (_array is UInt64)
+            //{
+            //    UInt64[] array = _array as UInt64[];
+            //    var box = ValueOnStack.MakeVBox(NumberType.INT64);
+            //    box.v64 = (Int64)array[index];
+            //    stackCalc.Push(box);
+            //}
             _codepos++;
         }
         public void Ldelem_I()
