@@ -40,6 +40,11 @@ namespace UnitTestDll
             return 100;
         }
 
+        public static IEnumerator UnitTest_Yield()
+        {
+            yield return null;
+        }
+
         public static void UnitTest_ConvertReturnObject2Float()
         {
             //在.net下不会报错，但是在unity3d下会报错，先把用例提交了
