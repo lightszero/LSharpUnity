@@ -20,12 +20,12 @@ namespace UnitTestDll
         }
         public static void UnitTest_CtorWithNoArg()
         {
-            System.Activator.CreateInstance(Type.GetType("TestClass,UnitTest"));
+            System.Activator.CreateInstance(Type.GetType("TestClass,Assembly-CSharp-firstpass"));
         }
 
         public static void UnitTest_CtorWithByteArg()
         {
-            System.Activator.CreateInstance(Type.GetType("TestClass,UnitTest"), new Object[] { (byte)32 });
+            System.Activator.CreateInstance(Type.GetType("TestClass,Assembly-CSharp-firstpass"), new Object[] { (byte)32 });
         }
 
         public static void UnitTest_2DimArray()
