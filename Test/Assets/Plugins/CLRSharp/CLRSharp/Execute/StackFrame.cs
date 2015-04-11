@@ -502,7 +502,7 @@ namespace CLRSharp
                 else ev = (int)obj;
                 obj = Enum.ToObject(type.TypeForSystem, ev);
             }
-            else
+            else 
             {
                 if (box != null)
                 {
@@ -1050,7 +1050,7 @@ namespace CLRSharp
         {
             VBox n2 = stackCalc.Pop() as VBox;
             object n1 = stackCalc.Pop();
-            if (n1 is VBox)
+            if(n1 is VBox)
             {
                 VBox n_1 = n1 as VBox;
                 n_1.Add(n2);
@@ -1349,7 +1349,7 @@ namespace CLRSharp
         }
 
         ////数组
-        public void NewArr(ThreadContext context, IMethod newForArray)
+        public void NewArr(ThreadContext context, Type type)
         {
             //string typename = type.FullName + "[]";
             //var _type = context.environment.GetType(typename, type.Module);
@@ -1357,7 +1357,7 @@ namespace CLRSharp
             //var m = _type.GetMethod(".ctor", tlist);
             var objv = stackCalc.Pop();
             if (objv is VBox) objv = (objv as VBox).BoxDefine();
-            var array = newForArray.Invoke(context, null, new object[] { objv });
+            var array = Array.CreateInstance(type,(int)objv);
             stackCalc.Push(array);
             _codepos++;
         }
@@ -1539,21 +1539,10 @@ namespace CLRSharp
             {
                 index = (int)indexobj;
             }
-            object _array = stackCalc.Pop();
-            //if (_array is Int64)
-            {
-                Int64[] array = _array  as Int64[];
-                var box = ValueOnStack.MakeVBox(NumberType.INT64);
-                box.v64 = array[index];
-                stackCalc.Push(box);
-            }
-            //else if (_array is UInt64)
-            //{
-            //    UInt64[] array = _array as UInt64[];
-            //    var box = ValueOnStack.MakeVBox(NumberType.INT64);
-            //    box.v64 = (Int64)array[index];
-            //    stackCalc.Push(box);
-            //}
+            Int64[] array = stackCalc.Pop() as Int64[];
+            var box = ValueOnStack.MakeVBox(NumberType.INT64);
+            box.v64 = array[index];
+            stackCalc.Push(box);
             _codepos++;
         }
         public void Ldelem_I()
@@ -2428,11 +2417,11 @@ namespace CLRSharp
         {
             var o1 = stackCalc.Pop();
             var o2 = stackCalc.Pop();
-            if (o2 is RefObj)
+            if(o2 is RefObj)
             {
                 (o2 as RefObj).Set(o1);
             }
-
+           
             _codepos++;
         }
         public void Stind_I1(ThreadContext context, object obj)
