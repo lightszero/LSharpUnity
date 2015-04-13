@@ -242,12 +242,17 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         env.GetType(typeof(List<CLScriptExt.Vector3>));
         env.GetType(typeof(List<int>[]));
         env.GetType(typeof(List<List<int>>));
+        env.GetType(typeof(List<List<List<int>>>));
         env.GetType(typeof(CLScriptExt.Vector3[]));
 
+        TestDele.instance.AddDeleT3<int,string>(null);
+        CLScriptExt.Student s = new CLScriptExt.Student();
+        s.ToString2<int>(2);//call once will help.
         //for aot dele
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int>), new CLRSharp.Delegate_BindTool<int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int>), new CLRSharp.Delegate_BindTool<int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int, int>), new CLRSharp.Delegate_BindTool<int, int, int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Func <int, int, int>), new CLRSharp.Delegate_BindTool_Ret<int, int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, string>), new CLRSharp.Delegate_BindTool<int, string>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<string>), new CLRSharp.Delegate_BindTool<string>());
     }

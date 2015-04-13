@@ -52,6 +52,7 @@ public class TestDele
 
     public void AddDeleT3<T, K>(Action2<T, K> dele)
     {
+        if (dele == null) return;
         if (dele is Action2<int, string>)
         {
             onUpdate3 += dele as Action2<int, string>;
