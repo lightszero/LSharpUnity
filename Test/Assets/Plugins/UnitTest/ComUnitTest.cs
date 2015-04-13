@@ -18,29 +18,52 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     {
 
     }
-
+    List<string> log2 = new List<string>();
+    int logmode = 1;
     public void Log(string str)
     {
+        if (logmode == 0)
+            return;
+        if (logmode == 2)
+            log2.Add(str);
         Debug.Log(str);
     }
 
     public void Log_Warning(string str)
     {
+        if (logmode == 0)
+            return;
+        if (logmode == 2)
+            log2.Add("<W>" + str);
         Debug.LogWarning(str);
     }
 
     public void Log_Error(string str)
     {
+        if (logmode == 0)
+            return;
+        if (logmode == 2)
+            log2.Add("<E>" + str);
         Debug.LogError(str);
     }
+
+    bool bHideRight = false;
     Vector2 pos = Vector2.zero;
+    Vector2 pos2 = Vector2.zero;
+    Vector2 pos3 = Vector2.zero;
+    string dump = null;
+    TestItem setitem = null;
+    bool showdump = false;
     void OnGUI()
     {
         GUILayout.BeginHorizontal();
         {
-            pos = GUILayout.BeginScrollView(pos);
+            pos = GUILayout.BeginScrollView(pos, false, true, GUILayout.Width(Screen.width * 0.4f));
             foreach (var t in tests)
             {
+            
+                if (t.bSucc && bHideRight)
+                    continue;
                 GUILayout.BeginHorizontal();
                 if (t.bSucc)
                     GUI.contentColor = Color.green;
@@ -49,35 +72,115 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                 else
                     GUI.contentColor = Color.white;
                 GUILayout.Label(t.ToString());
-                if (GUILayout.Button("Test"))
+                if (GUILayout.Button("Test", GUILayout.Width(100), GUILayout.Height(40)))
                 {
+                    dump = "";
+                    logmode = 2;
+                    log2.Clear();
                     try
                     {
+                        setitem = t;
                         TestOne(t.m, true, false);
                     }
-                    catch(Exception err)
+                    catch (Exception err)
                     {
-                        Debug.LogError(CLRSharp.ThreadContext.activeContext.Dump());
+                        dump = CLRSharp.ThreadContext.activeContext.Dump();
+                        Debug.LogError(dump);
                         Debug.LogError(err.ToString());
+                        log2.Add(err.ToString());
                     }
+                    logmode = 1;
                 }
-                if (GUILayout.Button("Test No Try"))
+                if (GUILayout.Button("Test No Try", GUILayout.Width(100), GUILayout.Height(40)))
                 {
-                    TestOne(t.m, true, true);
+                    dump = "";
+                    logmode = 2;
+                    log2.Clear();
+                    try
+                    {
+                        setitem = t;
+                        TestOne(t.m, true, true);
+                    }
+                    catch (Exception err)
+                    {
+                        dump = CLRSharp.ThreadContext.activeContext.Dump();
+                        Debug.LogError(dump);
+                        Debug.LogError(err.ToString());
+                        log2.Add(err.ToString());
+                    }
+                    logmode = 1;
                 }
                 GUILayout.EndHorizontal();
             }
             GUI.contentColor = Color.white;
             GUILayout.EndScrollView();
+
         }
         {
             GUILayout.BeginVertical();
             {
-                if (GUILayout.Button("TestAll"))
+                if (GUILayout.Button("TestAll", GUILayout.Width(100), GUILayout.Height(40)))
                 {
                     TestAll();
                 }
+                if (GUILayout.Button("Hide Right", GUILayout.Width(100), GUILayout.Height(40)))
+                {
+                    bHideRight = !bHideRight;
+                }
+
+                pos2 = GUILayout.BeginScrollView(pos2, false, true, GUILayout.Height(Screen.height * 0.4f));
+                {
+                    if (setitem != null && setitem.m != null)
+                    {
+                        var m = setitem.m as CLRSharp.Method_Common_CLRSharp;
+                        if (m != null)
+                            foreach (var c in m.method_CLRSharp.body.instructions)
+                            {
+                                var l = c.ToString();
+                                if (c.SequencePoint != null)
+                                {
+                                    l += "|" + c.SequencePoint.Document.Url + "(" + c.SequencePoint.StartLine + ")";
+                                }
+                                GUILayout.Label(l);
+                            }
+                    }
+                }
+                GUILayout.EndScrollView();
+                if(GUILayout.Button("showDump/Stack", GUILayout.Width(100), GUILayout.Height(40)))
+                {
+                    showdump = !showdump;
+                }
+                pos3 = GUILayout.BeginScrollView(pos3, false, true);
+                {
+                    if (showdump)
+                    {
+                        GUILayout.TextArea(dump);
+                    }
+                    else
+                    {
+                        for (int i = log2.Count - 1; i >= 0; i--)
+                        {
+                            string l = log2[i];
+                            if (l.Contains("<W>"))
+                            {
+                                GUI.contentColor = Color.yellow;
+                            }
+                            else if (l.Contains("<E>"))
+                            {
+                                GUI.contentColor = Color.red;
+                            }
+                            else
+                            {
+                                GUI.contentColor = Color.white;
+                            }
+                            GUILayout.Label(l.ToString());
+                        }
+
+                    }
+                }
+                GUILayout.EndScrollView();
             }
+
             GUILayout.EndVertical();
         }
         GUILayout.EndHorizontal();
@@ -100,7 +203,6 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     List<TestItem> tests = new List<TestItem>();
     void InitTest()
     {
-        tests.Clear();
 
         var bytes = Resources.Load<TextAsset>("unittestdll.dll").bytes;
         var bytespdb = Resources.Load<TextAsset>("unittestdll.pdb").bytes;
@@ -120,6 +222,14 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
             Log_Error(err.ToString());
             Log_Error("模块未加载完成，请检查错误");
         }
+
+        ResetTest();
+        Log(" Got Test:" + tests.Count);
+    }
+
+    private void ResetTest()
+    {
+        tests.Clear();
         var types = env.GetAllTypes();
         foreach (var t in types)
         {
@@ -157,7 +267,6 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
             }
 
         }
-        Log(" Got Test:" + tests.Count);
     }
     void ListAll()
     {
@@ -171,6 +280,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     }
     void TestAll()
     {
+        logmode = 0;
         Log_Warning("TestAll.");
         //reset
         var types = env.GetAllTypes();
@@ -178,11 +288,15 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         {
             CLRSharp.ICLRType_Sharp type = env.GetType(t) as CLRSharp.ICLRType_Sharp;
             if (type != null)
+            {
                 type.ResetStaticInstace();
+                Debug.Log("Reset:" + t);
+            }
         }
         int finish = 0;
         foreach (var m in tests)
         {
+            if (m.bSucc && bHideRight) continue;
             try
             {
                 TestOne(m.m, false, false);
@@ -198,6 +312,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
             }
         }
         Log_Warning("TestAllEnd. Count:" + finish + "/" + tests.Count);
+        logmode = 1;
     }
 
 
