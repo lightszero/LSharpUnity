@@ -50,3 +50,4 @@ Temporary Items
 *.csproj
 *.sln
 *.csproj
+*.suo

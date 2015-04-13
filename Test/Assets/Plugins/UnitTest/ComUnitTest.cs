@@ -227,17 +227,22 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         Log(" Got Test:" + tests.Count);
 
         //for aot
-
         env.GetType(typeof(Dictionary<int, string>));
         env.GetType(typeof(Dictionary<int, object>));
         env.GetType(typeof(Dictionary<int, CLRSharp.CLRSharp_Instance>));
+        env.GetType(typeof(Dictionary<int, Action>));
         env.GetType(typeof(LinkedList<int>));
         env.GetType(typeof(int[,]));
+        env.GetType(typeof(List<CLScriptExt.Student>));
+        env.GetType(typeof(List<CLScriptExt.Vector3>));
+        env.GetType(typeof(List<int>[]));
+        env.GetType(typeof(List<List<int>>));
+        env.GetType(typeof(CLScriptExt.Vector3[]));
 
         //for aot dele
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int>), new CLRSharp.Delegate_BindTool<int>());
-        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int,int>), new CLRSharp.Delegate_BindTool<int,int>());
-        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int,int,int>), new CLRSharp.Delegate_BindTool<int,int,int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int>), new CLRSharp.Delegate_BindTool<int, int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int, int>), new CLRSharp.Delegate_BindTool<int, int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, string>), new CLRSharp.Delegate_BindTool<int, string>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<string>), new CLRSharp.Delegate_BindTool<string>());
     }
@@ -336,7 +341,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
 
 
         int debug = LogStep ? 9 : 0;
-        if (CLRSharp.ThreadContext.activeContext == null)
+        //if (CLRSharp.ThreadContext.activeContext == null)
         {
             CLRSharp.ThreadContext context = new CLRSharp.ThreadContext(env, debug);
         }
