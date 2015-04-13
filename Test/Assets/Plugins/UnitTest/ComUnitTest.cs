@@ -61,7 +61,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
             pos = GUILayout.BeginScrollView(pos, false, true, GUILayout.Width(Screen.width * 0.4f));
             foreach (var t in tests)
             {
-            
+
                 if (t.bSucc && bHideRight)
                     continue;
                 GUILayout.BeginHorizontal();
@@ -146,7 +146,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                     }
                 }
                 GUILayout.EndScrollView();
-                if(GUILayout.Button("showDump/Stack", GUILayout.Width(100), GUILayout.Height(40)))
+                if (GUILayout.Button("showDump/Stack", GUILayout.Width(100), GUILayout.Height(40)))
                 {
                     showdump = !showdump;
                 }
@@ -225,6 +225,21 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
 
         ResetTest();
         Log(" Got Test:" + tests.Count);
+
+        //for aot
+
+        env.GetType(typeof(Dictionary<int, string>));
+        env.GetType(typeof(Dictionary<int, object>));
+        env.GetType(typeof(Dictionary<int, CLRSharp.CLRSharp_Instance>));
+        env.GetType(typeof(LinkedList<int>));
+        env.GetType(typeof(int[,]));
+
+        //for aot dele
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int>), new CLRSharp.Delegate_BindTool<int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int,int>), new CLRSharp.Delegate_BindTool<int,int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int,int,int>), new CLRSharp.Delegate_BindTool<int,int,int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, string>), new CLRSharp.Delegate_BindTool<int, string>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<string>), new CLRSharp.Delegate_BindTool<string>());
     }
 
     private void ResetTest()

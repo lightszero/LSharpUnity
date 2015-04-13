@@ -254,6 +254,51 @@ namespace CLRSharp
         }
         public object Invoke(ThreadContext context, object _this, object[] _params, bool bVisual)
         {//对程序类型，其实我们做不到区分虚实调用。。。没办法
+            if (this.Name == "Concat")
+            {//这里有一个IL2CPP的问题
+
+                object[] ppp = new object[_params.Length];
+                for (int i = 0; i < _params.Length; i++)
+                {
+                    if (_params[i] == null)
+                    {
+                        ppp[i] = null;
+                    }
+                    else if (_params[i] is string)
+                    {
+                        ppp[i] = _params[i];
+                    }
+                    else if (_params[i] is object[])
+                    {
+                        object[] pp = _params[i] as object[];
+                        ppp[i] = new object[pp.Length];
+                        for (int j = 0; j < pp.Length; j++)
+                        {
+                            if (pp[j] == null)
+                            {
+                                (ppp[i] as object[])[j] = null;
+                            }
+                            else if (pp[j] is string)
+                            {
+                                (ppp[i] as object[])[j] = pp[j];
+                            }
+                            else
+                            {
+                                (ppp[i] as object[])[j] = pp[j].ToString();
+                            }
+                        }
+                    }
+                    else if (_params[i] is string[])
+                    {
+                        ppp[i] = _params[i];
+                    }
+                    else
+                    {
+                        ppp[i] = _params[i].ToString();
+                    }
+                }
+                return Invoke(context, _this, ppp);
+            }
             return Invoke(context, _this, _params);
         }
         public object Invoke(ThreadContext context, object _this, object[] _params)
