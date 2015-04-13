@@ -51,7 +51,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     Vector2 pos = Vector2.zero;
     Vector2 pos2 = Vector2.zero;
     Vector2 pos3 = Vector2.zero;
-    string dump = null;
+    string dump = "";
     TestItem setitem = null;
     bool showdump = false;
     void OnGUI()
@@ -119,7 +119,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         {
             GUILayout.BeginVertical();
             {
-                if (GUILayout.Button("TestAll", GUILayout.Width(100), GUILayout.Height(40)))
+                if (GUILayout.Button("TestAll", GUILayout.Width(200), GUILayout.Height(80)))
                 {
                     TestAll();
                 }
@@ -154,7 +154,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                 {
                     if (showdump)
                     {
-                        GUILayout.TextArea(dump);
+                        GUILayout.TextField(dump);
                     }
                     else
                     {
