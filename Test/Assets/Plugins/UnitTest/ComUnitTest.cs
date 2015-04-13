@@ -154,7 +154,12 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                 {
                     if (showdump)
                     {
-                        GUILayout.TextField(dump);
+                        string[] pp = dump.Split('\n');
+                        foreach(var p in pp)
+                        {
+                            GUILayout.Label(p);
+                        }
+                   
                     }
                     else
                     {
