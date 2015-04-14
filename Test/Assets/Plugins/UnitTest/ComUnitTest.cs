@@ -245,6 +245,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         env.GetType(typeof(Dictionary<int, object>));
         env.GetType(typeof(Dictionary<int, CLRSharp.CLRSharp_Instance>));
         env.GetType(typeof(Dictionary<int, Action>));
+        env.GetType(typeof(Dictionary<Int16, Action>));
         env.GetType(typeof(LinkedList<int>));
         env.GetType(typeof(int[,]));
         env.GetType(typeof(List<CLScriptExt.Student>));
@@ -253,10 +254,12 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         env.GetType(typeof(List<List<int>>));
         env.GetType(typeof(List<List<List<int>>>));
         env.GetType(typeof(CLScriptExt.Vector3[]));
+        env.GetType(typeof(System.Collections.Generic.IEnumerable<int>));
 
         TestDele.instance.AddDeleT3<int, string>(null);
         CLScriptExt.Student s = new CLScriptExt.Student();
         s.ToString2<int>(2);//call once will help.
+        CLScriptExt.P2.TestS2<int, int>();
         //for aot dele
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int>), new CLRSharp.Delegate_BindTool<int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int>), new CLRSharp.Delegate_BindTool<int, int>());
