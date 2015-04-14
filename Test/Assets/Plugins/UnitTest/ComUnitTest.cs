@@ -245,6 +245,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         env.GetType(typeof(Dictionary<int, object>));
         env.GetType(typeof(Dictionary<int, CLRSharp.CLRSharp_Instance>));
         env.GetType(typeof(Dictionary<int, Action>));
+        env.GetType(typeof(Dictionary<int, Action<MyClass2>>));
         env.GetType(typeof(Dictionary<Int16, Action>));
         env.GetType(typeof(LinkedList<int>));
         env.GetType(typeof(int[,]));
@@ -262,6 +263,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         CLScriptExt.P2.TestS2<int, int>();
         //for aot dele
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int>), new CLRSharp.Delegate_BindTool<int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<MyClass2>), new CLRSharp.Delegate_BindTool<MyClass2>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int>), new CLRSharp.Delegate_BindTool<int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int, int>), new CLRSharp.Delegate_BindTool<int, int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Func<int, int, int>), new CLRSharp.Delegate_BindTool_Ret<int, int, int>());

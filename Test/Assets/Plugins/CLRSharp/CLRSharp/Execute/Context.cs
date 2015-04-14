@@ -308,7 +308,7 @@ namespace CLRSharp
             catch (Exception err)
             {
 
-                throw new Exception("Error GetMethod:" + token + "\n ERR:" + err);
+                throw new Exception("Error GetMethod==<这意味着这个函数无法被L#找到>" + token, err);
             }
         }
         //IMethod GetNewForArray(object token)
