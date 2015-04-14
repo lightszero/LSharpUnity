@@ -155,11 +155,11 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                     if (showdump)
                     {
                         string[] pp = dump.Split('\n');
-                        foreach(var p in pp)
+                        foreach (var p in pp)
                         {
                             GUILayout.Label(p);
                         }
-                   
+
                     }
                     else
                     {
@@ -193,11 +193,20 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     }
     class TestItem
     {
-        public TestItem(CLRSharp.IMethod _m)
+        public TestItem(CLRSharp.ICLRType type, string method)
         {
-            this.m = _m;
+            this.type = type;
+            this.method = method;
         }
-        public CLRSharp.IMethod m;
+        public CLRSharp.IMethod m
+        {
+            get
+            {
+                return type.GetMethod(method, CLRSharp.MethodParamList.constEmpty());
+            }
+        }
+        CLRSharp.ICLRType type;
+        public string method;
         public bool bError = false;
         public bool bSucc = false;
         public override string ToString()
@@ -245,14 +254,14 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         env.GetType(typeof(List<List<List<int>>>));
         env.GetType(typeof(CLScriptExt.Vector3[]));
 
-        TestDele.instance.AddDeleT3<int,string>(null);
+        TestDele.instance.AddDeleT3<int, string>(null);
         CLScriptExt.Student s = new CLScriptExt.Student();
         s.ToString2<int>(2);//call once will help.
         //for aot dele
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int>), new CLRSharp.Delegate_BindTool<int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int>), new CLRSharp.Delegate_BindTool<int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, int, int>), new CLRSharp.Delegate_BindTool<int, int, int>());
-        CLRSharp.Delegate_Binder.RegBind(typeof(Func <int, int, int>), new CLRSharp.Delegate_BindTool_Ret<int, int, int>());
+        CLRSharp.Delegate_Binder.RegBind(typeof(Func<int, int, int>), new CLRSharp.Delegate_BindTool_Ret<int, int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, string>), new CLRSharp.Delegate_BindTool<int, string>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<string>), new CLRSharp.Delegate_BindTool<string>());
     }
@@ -273,7 +282,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                     if (mm != null)
                     {
                         if (mm.Name.Contains("UnitTest"))
-                            tests.Add(new TestItem(mm));
+                            tests.Add(new TestItem(tclr, m.Name));
                     }
                 }
                 if (tclr.type_CLRSharp.HasNestedTypes)
@@ -288,7 +297,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                             if (m.ParamList.Count == 0)
                             {
                                 if (m.Name.Contains("UnitTest"))
-                                    tests.Add(new TestItem(m));
+                                    tests.Add(new TestItem(tclr, m.Name));
                             }
                         }
                     }

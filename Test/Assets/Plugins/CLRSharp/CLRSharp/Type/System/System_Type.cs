@@ -254,13 +254,28 @@ namespace CLRSharp
         }
         public object Invoke(ThreadContext context, object _this, object[] _params, bool bVisual)
         {//对程序类型，其实我们做不到区分虚实调用。。。没办法
-            if (this.Name == "Concat")
+            if (this.Name == "Concat" && _this != null && _this is string)
             {//这里有一个IL2CPP的问题
-                if(_params.Length==1&&_this!=null&&_this is string)
+                if (_params.Length == 1)
                 {
-                    return (_this as string) + _params[0] as string;
+                    if (_params[0] == null)
+                        return null;
+                    return _params[0].ToString();
                 }
-              
+                else
+                {
+                    string outstr = "null";
+                    if (_params[0] != null) outstr = _params[0].ToString();
+
+                    for (int i = 1; i < _params.Length; i++)
+                    {
+                        if (_params[i] != null)
+                            outstr += _params[i];
+                        else
+                            outstr += "null";
+                    }
+                }
+
             }
             return Invoke(context, _this, _params);
         }
