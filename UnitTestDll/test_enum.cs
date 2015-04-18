@@ -91,6 +91,32 @@ namespace UnitTestDll
             bool[] data = new bool[4] { true,true,true,true};
             data[0] = false;
         }
+        
+        static void UnitTest_14_TestMemoryBuffer()
+        {
+            Blog blog = new Blog();
+            blog.Content = new byte[] { 1 };
+            blog.CreatedTime = 2;
+            blog.Id = "TestBlog";
+            blog.IpAddress = "HereIsIpAddress";
+            blog.Topic = "TestTopic";
+            Dictionary<string, string> tmp = new Dictionary<string, string>();
+            tmp.Add("testKey", "testValue");
+            blog.Props = tmp;
+
+            TMemoryBuffer transport = new TMemoryBuffer();
+            TBinaryProtocol prot = new TBinaryProtocol(transport);
+            blog.Write(prot);
+            byte[] data = transport.GetBuffer();
+            //byte[] data = TMemoryBuffer.Serialize(blog);
+
+            //Blog result = TMemoryBuffer.DeSerialize<Blog>(data);
+            TMemoryBuffer transport2 = new TMemoryBuffer(data);
+            TBinaryProtocol prot2 = new TBinaryProtocol(transport2);
+            Blog result = new Blog();
+            result.Read(prot2);
+            Console.WriteLine("Id " + result.Id + " IpAddress " + result.IpAddress + " Props.testKey " + result.Props["testKey"]);
+        }
 
     }
 
