@@ -257,6 +257,7 @@
      <Compile Include="Assets\Plugins\UnitTest\ComUnitTest.cs" />
      <Compile Include="Assets\Plugins\UnitTest\ComponentM.cs" />
      <Compile Include="Assets\Plugins\UnitTest\Perform\Perform.cs" />
+     <Compile Include="Assets\Plugins\UnitTest\TestEnum.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
