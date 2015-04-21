@@ -92,28 +92,14 @@ namespace UnitTestDll
             bool[] data = new bool[4] { true,true,true,true};
             data[0] = false;
         }
-        public enum CSharpEnum : byte
-        {
-            Zero = 0,
-            One = 1,
-            Two = 2,
-        }
 
-        public struct MyTestClassA
-        {
-            public CSharpEnum data;
-            public MyTestClassA(CSharpEnum data)
-            {
-                this.data = data;
-            }
-        } 
         static void UnitTest_17_TestCSharpEnum()
         {
             MyTestClassA a = new MyTestClassA(CSharpEnum.Zero);
-            Debug.LogWarning("v=" + a.data);
+            //Debug.LogWarning("v=" + a.data);
         }
 
-    }
+    } 
 
 
             
