@@ -250,11 +250,11 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         env.GetType(typeof(LinkedList<int>));
         env.GetType(typeof(int[,]));
         env.GetType(typeof(List<CLScriptExt.Student>));
-        env.GetType(typeof(List<CLScriptExt.Vector3>));
+        env.GetType(typeof(List<Vector3>));
         env.GetType(typeof(List<int>[]));
         env.GetType(typeof(List<List<int>>));
         env.GetType(typeof(List<List<List<int>>>));
-        env.GetType(typeof(CLScriptExt.Vector3[]));
+        env.GetType(typeof(Vector3[]));
         env.GetType(typeof(System.Collections.Generic.IEnumerable<int>));
 
         TestDele.instance.AddDeleT3<int, string>(null);

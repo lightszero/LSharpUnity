@@ -255,8 +255,8 @@
      <Compile Include="Assets\Plugins\UnitTest\CLScriptExt\TestDele.cs" />
      <Compile Include="Assets\Plugins\UnitTest\CLScriptExt\Vector3.cs" />
      <Compile Include="Assets\Plugins\UnitTest\ComUnitTest.cs" />
+     <Compile Include="Assets\Plugins\UnitTest\ComponentM.cs" />
      <Compile Include="Assets\Plugins\UnitTest\Perform\Perform.cs" />
-     <Compile Include="Assets\Plugins\UnitTest\SimU3D\GameObject.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

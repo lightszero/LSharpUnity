@@ -16,7 +16,7 @@ namespace UnitTest.Perform
             for (int i = 0; i < count; i++)
             {
                 GameObject go = new GameObject();
-                UnityEngine.GameObject.Destory(go);
+                GameObject.Destroy(go);
             }
             double o = (DateTime.Now - t0).TotalSeconds;
             Logger.Log("time=" + o);
@@ -27,7 +27,7 @@ namespace UnitTest.Perform
             DateTime t0 = DateTime.Now;
             for (int i = 0; i < count; i++)
             {
-                CLScriptExt.Vector3 p;
+                UnityEngine.Vector3 p;
                 p.x = 1;
                 p.y = 2;
                 p.z = 3;
