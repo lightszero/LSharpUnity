@@ -348,36 +348,46 @@ namespace UnitTestDll
 
         static GameObject obj;
 
-        //public static void UnitTest_ComponentAdd0()
-        //{
-        //    obj = new GameObject();
-        //    ComponentM c = ComponentM.AddComponentM(obj);
-        //    c.action =
-        //        () =>
-        //        {
-        //            GameObject o = GameObject.Find("Text");
-        //            o.GetComponent<Text>().text = "UnitTest_ComponentAdd0";
-        //        };
-        //}
+        public static void UnitTest_ComponentAdd0()
+        {
+            obj = new GameObject();
+            ComponentM c = ComponentM.AddComponentM(obj);
+            c.action =
+                () =>
+                {
+                    GameObject o = GameObject.Find("Text");
+                    if(o==null)
+                    {
+                        Debug.LogError("sorry. not found text.");
+                        return;
+                    }
+                    o.GetComponent<Text>().text = "UnitTest_ComponentAdd0";
+                };
+        }
 
-        //public static void UnitTest_ComponentAdd()
-        //{
-        //    obj = new GameObject();
-        //    ComponentM c = obj.AddComponent<ComponentM>();
-        //    c.action =
-        //        () =>
-        //        {
-        //            GameObject o = GameObject.Find("Text");
-        //            o.GetComponent<Text>().text += "\nUnitTest_ComponentAdd";
-        //        };
-        //}
+        public static void UnitTest_ComponentAdd()
+        {
+            obj = new GameObject();
+            ComponentM c = obj.AddComponent<ComponentM>();
+            c.action =
+                () =>
+                {
+                    GameObject o = GameObject.Find("Text");
+                    if (o == null)
+                    {
+                        Debug.LogError("sorry. not found text.");
+                        return;
+                    }
+                    o.GetComponent<Text>().text += "\nUnitTest_ComponentAdd";
+                };
+        }
 
-        //public static void UnitTest_ComponentGet()
-        //{
-        //    ComponentM c = obj.GetComponent<ComponentM>();
-        //    if (c == null)
-        //        Debug.LogError("UnitTest_ComponentGet");
-        //    Debug.Log(c);
-        //}
+        public static void UnitTest_ComponentGet()
+        {
+            ComponentM c = obj.GetComponent<ComponentM>();
+            if (c == null)
+                Debug.LogError("UnitTest_ComponentGet");
+            Debug.Log(c);
+        }
     }
 }
