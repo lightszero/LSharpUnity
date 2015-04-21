@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using UnitTest;
 using UnityEngine;
+using UnityEngine.UI;
+using Color32 = CLScriptExt.Color32;
+using Vector3 = CLScriptExt.Vector3;
+
 namespace UnitTestDll
 {
     public class UlngTest
@@ -263,8 +267,8 @@ namespace UnitTestDll
         //只要有一个static void UnitTest() 函数的，就是单元测试
         public static void UnitTest_01()
         {
-            UnityEngine.GameObject o = new UnityEngine.GameObject(25);
-            Logger.Log("abc" + o.GetId());
+            GameObject o = new GameObject("25");
+            //Logger.Log("abc" + o.GetId());
             Console.WriteLine("aaaa");
         }
         public static void UnitTest_02()
@@ -340,6 +344,50 @@ namespace UnitTestDll
             //dic[k] = () => { Logger.Log("0"); };
             dic[(short)0] = () => { Logger.Log("0"); };
             dic[(short)0]();
+        }
+
+        static GameObject obj;
+
+        public static void UnitTest_ComponentAdd0()
+        {
+            obj = new GameObject();
+            ComponentM c = ComponentM.AddComponentM(obj);
+            c.action =
+                () =>
+                {
+                    GameObject o = GameObject.Find("Text");
+                    if(o==null)
+                    {
+                        Debug.LogError("sorry. not found text.");
+                        return;
+                    }
+                    o.GetComponent<Text>().text = "UnitTest_ComponentAdd0";
+                };
+        }
+
+        public static void UnitTest_ComponentAdd()
+        {
+            obj = new GameObject();
+            ComponentM c = obj.AddComponent<ComponentM>();
+            c.action =
+                () =>
+                {
+                    GameObject o = GameObject.Find("Text");
+                    if (o == null)
+                    {
+                        Debug.LogError("sorry. not found text.");
+                        return;
+                    }
+                    o.GetComponent<Text>().text += "\nUnitTest_ComponentAdd";
+                };
+        }
+
+        public static void UnitTest_ComponentGet()
+        {
+            ComponentM c = obj.GetComponent<ComponentM>();
+            if (c == null)
+                Debug.LogError("UnitTest_ComponentGet");
+            Debug.Log(c);
         }
     }
 }

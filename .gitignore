@@ -46,3 +46,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.csproj
+*.csproj
+*.sln
+*.csproj
+*.suo

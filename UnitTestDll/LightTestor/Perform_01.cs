@@ -5,6 +5,7 @@ using System.Text;
 using UnitTest;
 using UnitTest.Perform;
 using UnityEngine;
+using Vector3 = CLScriptExt.Vector3;
 
 namespace UnitTestDll
 {
@@ -21,7 +22,7 @@ namespace UnitTestDll
             double sv1 = Perform.Call(() =>
             {
                 GameObject go = new GameObject();
-                UnityEngine.GameObject.Destory(go);
+                GameObject.Destroy(go);
             }, count);
             double sv2 = Perform.Call(() =>
             {

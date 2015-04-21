@@ -91,6 +91,11 @@ namespace UnitTestDll
             bool[] data = new bool[4] { true,true,true,true};
             data[0] = false;
         }
+        
+        static void UnitTest_17_TestCSharpEnum()
+        {
+            MyTestClassA a = new MyTestClassA(CSharpEnum.Zero);
+        }
 
     }
 
