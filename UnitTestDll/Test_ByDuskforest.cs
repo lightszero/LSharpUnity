@@ -9,6 +9,12 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        //2015.4.22 by ldw
+        public static void UnitTest_mousePosition()
+        {
+            float a = UnityEngine.Input.mousePosition.x;
+        }
+        
         public static void UnitTest_Bool2Object()
         {
             TestClass.TestObjectArg(true);
