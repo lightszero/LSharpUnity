@@ -339,26 +339,26 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
             }
         }
         int finish = 0;
-        string text = "";
+        //string text = "";
         foreach (var m in tests)
         {
             if (m.bSucc && bHideRight) continue;
             try
             {
                 if (m.method.Contains("UnitTest_TestThread")) continue;
-                text += "Begin==" + m.method + "==\n";
-                System.IO.File.WriteAllText("e:\\log.txt", text);
+                //text += "Begin==" + m.method + "==\n";
+                //System.IO.File.WriteAllText("e:\\log.txt", text);
                 TestOne(m.m, false, false);
                 finish++;
                 m.bSucc = true;
-                text += "<succ>==" + m.method + "==\n";
-                System.IO.File.WriteAllText("e:\\log.txt", text);
+                //text += "<succ>==" + m.method + "==\n";
+                //System.IO.File.WriteAllText("e:\\log.txt", text);
                 m.bError = false;
             }
             catch (Exception err)
             {
-                text += "<fail>==" + m.method + "==\n";
-                System.IO.File.WriteAllText("e:\\log.txt", text);
+                //text += "<fail>==" + m.method + "==\n";
+                //System.IO.File.WriteAllText("e:\\log.txt", text);
 
                 m.bError = true;
                 m.bSucc = false;
