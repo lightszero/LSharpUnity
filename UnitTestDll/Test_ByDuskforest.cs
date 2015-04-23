@@ -12,9 +12,10 @@ namespace UnitTestDll
         //2015.4.22 by ldw
         public static void UnitTest_mousePosition()
         {
-            float a = UnityEngine.Input.mousePosition.x;
+            float a = MyClass2.GetInputMousePos().x;
+            UnityEngine.Debug.Log("a=" + a);
         }
-        
+
         public static void UnitTest_Bool2Object()
         {
             TestClass.TestObjectArg(true);
@@ -36,7 +37,7 @@ namespace UnitTestDll
 
         public static void UnitTest_2DimArray()
         {
-            int[,] a = new int[1,1];
+            int[,] a = new int[1, 1];
             a[0, 0] = 4;
             Logger.Log("abc=" + a[0, 0]);
         }
