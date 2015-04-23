@@ -1,0 +1,13 @@
+﻿<Properties StartupItem="UnitTestDll.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="e:\github2\LSharpUnity\UnitTestDll\Test0.cs" Line="21" Column="13" />
+      <File FileName="e:\github2\LSharpUnity\UnitTestDll\Eviltestor\test04\Test04.cs" Line="94" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

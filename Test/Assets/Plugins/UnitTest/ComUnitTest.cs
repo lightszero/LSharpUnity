@@ -218,18 +218,19 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     void InitTest()
     {
 
-        var bytes = Resources.Load<TextAsset>("unittestdll.dll").bytes;
-        var bytespdb = Resources.Load<TextAsset>("unittestdll.pdb").bytes;
-        //var bytesmdb = System.IO.File.ReadAllBytes("UnitTestDll.dll.mdb");//现在支持mdb了
+        //var bytes = Resources.Load<TextAsset>("unittestdll.dll").bytes;
+        //var bytespdb = Resources.Load<TextAsset>("unittestdll.pdb").bytes;
+        var bytes = Resources.Load<TextAsset>("unittestdll2.dll").bytes;
+        var bytesmdb = Resources.Load<TextAsset>("unittestdll2.dll.mdb").bytes;//现在支持mdb了
         System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
-        System.IO.MemoryStream mspdb = new System.IO.MemoryStream(bytespdb);
-        //System.IO.MemoryStream msmdb = new System.IO.MemoryStream(bytesmdb);
+        //System.IO.MemoryStream mspdb = new System.IO.MemoryStream(bytespdb);
+        System.IO.MemoryStream msmdb = new System.IO.MemoryStream(bytesmdb);
 
         //Log(" L# Ver:" + env.version);
         try
         {
-            env.LoadModule(ms, mspdb, new Mono.Cecil.Pdb.PdbReaderProvider());
-            //env.LoadModule(ms, msmdb, new Mono.Cecil.Mdb.MdbReaderProvider());
+            //env.LoadModule(ms, mspdb, new Mono.Cecil.Pdb.PdbReaderProvider());
+            env.LoadModule(ms, msmdb, new Mono.Cecil.Mdb.MdbReaderProvider());
         }
         catch (Exception err)
         {
@@ -286,7 +287,7 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
                     var mm = tclr.GetMethod(m.Name, CLRSharp.MethodParamList.constEmpty());
                     if (mm != null)
                     {
-                        if (mm.Name.Contains("UnitTest"))
+                        if (mm.Name.IndexOf("UnitTest") == 0)
                             tests.Add(new TestItem(tclr, m.Name));
                     }
                 }
@@ -338,18 +339,27 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
             }
         }
         int finish = 0;
+        string text = "";
         foreach (var m in tests)
         {
             if (m.bSucc && bHideRight) continue;
             try
             {
+                if (m.method.Contains("UnitTest_TestThread")) continue;
+                text += "Begin==" + m.method + "==\n";
+                System.IO.File.WriteAllText("e:\\log.txt", text);
                 TestOne(m.m, false, false);
                 finish++;
                 m.bSucc = true;
+                text += "<succ>==" + m.method + "==\n";
+                System.IO.File.WriteAllText("e:\\log.txt", text);
                 m.bError = false;
             }
             catch (Exception err)
             {
+                text += "<fail>==" + m.method + "==\n";
+                System.IO.File.WriteAllText("e:\\log.txt", text);
+
                 m.bError = true;
                 m.bSucc = false;
                 Log_Error(m.ToString() + "|||" + err.ToString());

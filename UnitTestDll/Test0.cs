@@ -28,7 +28,7 @@ namespace UnitTestDll
         public static void UnitTest_UInt64()
         {
             UlngTest tt = new UlngTest();
-            UlngTest.DoUINt64(tt.aaa);
+            //UlngTest.DoUINt64(tt.aaa);
         }
 
         private UlngTest()
