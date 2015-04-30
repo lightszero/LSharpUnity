@@ -251,7 +251,6 @@ namespace CLRSharp
             }
             else if (array is char[])
             {
-                string ss = System.Text.Encoding.UTF8.GetString(bytes);
                 int step = 2;
                 char[] arr = array as char[];
                 for (int i = 0; i < Math.Min(bytes.Length / step, arr.Length); i++)
