@@ -98,6 +98,27 @@ namespace UnitTestDll
             MyTestClassA a = new MyTestClassA(CSharpEnum.Zero);
             //Debug.LogWarning("v=" + a.data);
         }
+        static void UnitTest_18()
+		{
+			Vector3 pos = new Vector3(2, 2, 2);
+            Vector3 post = new Vector3(3,3,3);
+            for (int i = 0; i != 2; ++i)
+            {
+                if (i == 0)
+                {
+                    Vector3 pos1 = Vector3.zero;
+                    pos = pos1;
+                }
+                else if (i == 1)
+                {
+                    Vector3 pos1;
+                    pos1.x = post.x;
+                    pos1.y = post.y;
+                    pos1.z = post.z;
+                }
+                Debug.LogWarning(pos.x);
+            }
+		}
 
     } 
 
