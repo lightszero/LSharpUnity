@@ -9,6 +9,25 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public static void UnitTest_ByteCast()
+        {
+            Hashtable hash = new Hashtable();
+            byte a = 2;
+            hash.Add("state", a);
+            byte index = (byte)hash["state"];
+            
+            switch(index)
+            {
+                case 1:
+                    break;
+                case 2:
+                    UnityEngine.Debug.Log("a=" + a);
+                    break;
+                default:
+                    break;
+            }
+        }
+        
         //2015.4.22 by ldw
         public static void UnitTest_mousePosition()
         {
