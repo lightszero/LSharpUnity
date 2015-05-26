@@ -9,6 +9,20 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public static void UnitTest_String()
+        {
+            Dictionary<int, string> dic = new Dictionary<int, string>()
+            {
+                {0, "今天天气不错风和日丽鸟语花香"}
+            };
+
+            string b = "123";
+
+            string test = dic[0] + "-" + b + "(" + dic[0];
+
+            UnityEngine.Debug.LogError(test);
+        }
+        
         public static void UnitTest_ByteCast()
         {
             Hashtable hash = new Hashtable();
