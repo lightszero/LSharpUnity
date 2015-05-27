@@ -16,11 +16,20 @@ namespace UnitTestDll
                 {0, "今天天气不错风和日丽鸟语花香"}
             };
 
-            string b = "123";
+            int a = 5;
+            float b = 5.0f;
+            byte c = 5;
+            string d = "5";
 
-            string test = dic[0] + "-" + b + "(" + dic[0];
+            string test1 = dic[0] + "-" + a + "(" + dic[0];
+            string test2 = dic[0] + "-" + b + "(" + dic[0];
+            string test3 = dic[0] + "-" + c + "(" + dic[0];
+            string test4 = dic[0] + "-" + d + "(" + dic[0];
 
-            UnityEngine.Debug.LogError(test);
+            UnityEngine.Debug.LogError(test1);
+            UnityEngine.Debug.LogError(test2);
+            UnityEngine.Debug.LogError(test3);
+            UnityEngine.Debug.LogError(test4);
         }
         
         public static void UnitTest_ByteCast()
