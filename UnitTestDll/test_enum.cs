@@ -119,6 +119,24 @@ namespace UnitTestDll
                 Debug.LogWarning(pos.x);
             }
 		}
+		
+	static void UnitTest_19()
+        {
+            TestEvent ca = new TestEvent();
+            ca.Test();
+        }
+
+        class TestEvent
+        {
+            public event VoidDelegateBool MyTestEvent;
+
+            public void Test()
+            {
+                MyTestEvent += VoidDelegateBool;
+            }
+            void VoidDelegateBool(bool data)
+            { }
+        }
 
     } 
 
