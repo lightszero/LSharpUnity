@@ -270,6 +270,8 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
         CLRSharp.Delegate_Binder.RegBind(typeof(Func<int, int, int>), new CLRSharp.Delegate_BindTool_Ret<int, int, int>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<int, string>), new CLRSharp.Delegate_BindTool<int, string>());
         CLRSharp.Delegate_Binder.RegBind(typeof(Action<string>), new CLRSharp.Delegate_BindTool<string>());
+        
+        CLRSharp.Delegate_Binder.RegBind(typeof(Action<bool>), new CLRSharp.Delegate_BindTool<bool>());
     }
 
     private void ResetTest()
