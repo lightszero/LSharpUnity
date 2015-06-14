@@ -128,7 +128,7 @@ namespace UnitTestDll
 
         class TestEvent
         {
-            public event VoidDelegateBool MyTestEvent;
+            public event Action<bool> MyTestEvent;
 
             public void Test()
             {

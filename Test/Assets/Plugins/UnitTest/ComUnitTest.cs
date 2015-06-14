@@ -218,19 +218,19 @@ public class ComUnitTest : MonoBehaviour, CLRSharp.ICLRSharp_Logger
     void InitTest()
     {
 
-        //var bytes = Resources.Load<TextAsset>("unittestdll.dll").bytes;
-        //var bytespdb = Resources.Load<TextAsset>("unittestdll.pdb").bytes;
-        var bytes = Resources.Load<TextAsset>("unittestdll2.dll").bytes;
-        var bytesmdb = Resources.Load<TextAsset>("unittestdll2.dll.mdb").bytes;//现在支持mdb了
+        var bytes = Resources.Load<TextAsset>("unittestdll.dll").bytes;
+        var bytespdb = Resources.Load<TextAsset>("unittestdll.pdb").bytes;
+        //var bytes = Resources.Load<TextAsset>("unittestdll2.dll").bytes;
+        //var bytesmdb = Resources.Load<TextAsset>("unittestdll2.dll.mdb").bytes;//现在支持mdb了
         System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
-        //System.IO.MemoryStream mspdb = new System.IO.MemoryStream(bytespdb);
-        System.IO.MemoryStream msmdb = new System.IO.MemoryStream(bytesmdb);
+        System.IO.MemoryStream mspdb = new System.IO.MemoryStream(bytespdb);
+        //System.IO.MemoryStream msmdb = new System.IO.MemoryStream(bytesmdb);
 
         //Log(" L# Ver:" + env.version);
         try
         {
-            //env.LoadModule(ms, mspdb, new Mono.Cecil.Pdb.PdbReaderProvider());
-            env.LoadModule(ms, msmdb, new Mono.Cecil.Mdb.MdbReaderProvider());
+            env.LoadModule(ms, mspdb, new Mono.Cecil.Pdb.PdbReaderProvider());
+            //env.LoadModule(ms, msmdb, new Mono.Cecil.Mdb.MdbReaderProvider());
         }
         catch (Exception err)
         {
