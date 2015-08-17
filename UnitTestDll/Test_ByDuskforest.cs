@@ -9,6 +9,12 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public static void UnitTest_mousePosition2()
+        {
+            float i = UnityEngine.Input.mousePosition.x;
+            UnityEngine.Debug.Log("i = " + i);
+        }
+        
         public static void UnitTest_String()
         {
             Dictionary<int, string> dic = new Dictionary<int, string>()
