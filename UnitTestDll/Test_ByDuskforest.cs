@@ -9,6 +9,17 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public static void UnitTest_Whilefloat()
+        {
+            System.Object a = 5.0f;
+
+            while((float)a > 0)
+            {
+                UnityEngine.Debug.Log(a);
+                break;
+            }
+        }
+        
         public static void UnitTest_String()
         {
             Dictionary<int, string> dic = new Dictionary<int, string>()
