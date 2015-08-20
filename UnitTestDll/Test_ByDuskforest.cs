@@ -9,12 +9,23 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public static void UnitTest_Whilefloat()
+        {
+            System.Object a = 5.0f;
+
+            while ((float)a > 0)
+            {
+                UnityEngine.Debug.Log(a);
+                break;
+            }
+        }
+
         public static void UnitTest_mousePosition2()
         {
             float i = UnityEngine.Input.mousePosition.x;
             UnityEngine.Debug.Log("i = " + i);
         }
-        
+
         public static void UnitTest_String()
         {
             Dictionary<int, string> dic = new Dictionary<int, string>()
@@ -37,15 +48,15 @@ namespace UnitTestDll
             UnityEngine.Debug.LogError(test3);
             UnityEngine.Debug.LogError(test4);
         }
-        
+
         public static void UnitTest_ByteCast()
         {
             Hashtable hash = new Hashtable();
             byte a = 2;
             hash.Add("state", a);
             byte index = (byte)hash["state"];
-            
-            switch(index)
+
+            switch (index)
             {
                 case 1:
                     break;
@@ -56,7 +67,7 @@ namespace UnitTestDll
                     break;
             }
         }
-        
+
         //2015.4.22 by ldw
         public static void UnitTest_mousePosition()
         {
