@@ -9,6 +9,19 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public static void UnitTest_casttest()
+        {
+            string str = "1";
+            int a;
+            int.TryParse(str, out a);
+            int b = 1;
+
+            if (a == b)
+            {
+                UnityEngine.Debug.Log(1);
+            }
+        }
+        
         public static void UnitTest_Whilefloat()
         {
             System.Object a = 5.0f;
