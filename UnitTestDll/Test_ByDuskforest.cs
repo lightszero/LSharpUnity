@@ -9,6 +9,29 @@ namespace UnitTestDll
 {
     class Test_ByDuskforest
     {
+        public interface itest
+        {
+            System.Object testfunc();
+        }
+
+        public class testclass : itest
+        {
+            public System.Object testfunc()
+            {
+                return this;
+            }
+        }
+
+        public static void UnitTest_interfacetest()
+        {
+            itest a = new testclass();
+            itest b = a.testfunc() as itest;
+            if (b == null)
+            {
+                throw new Exception("b = null");
+            }
+        }
+        
         public static void UnitTest_Whilefloat()
         {
             System.Object a = 5.0f;
