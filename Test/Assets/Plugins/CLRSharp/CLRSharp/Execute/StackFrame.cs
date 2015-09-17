@@ -686,7 +686,6 @@ namespace CLRSharp
         public void Bne(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_ne(n2))
@@ -701,10 +700,9 @@ namespace CLRSharp
         public void Bne_Un(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
-			if (n1.logic_ne_Un(n2))
+            if (n1.logic_ne_Un(n2))
             {
                 _codepos = addr_index;// _body.addr[pos.Offset];
 
@@ -717,7 +715,6 @@ namespace CLRSharp
         public void Bge(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_ge(n2))
@@ -733,7 +730,6 @@ namespace CLRSharp
         public void Bge_Un(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_ge_Un(n2))
@@ -749,7 +745,6 @@ namespace CLRSharp
         public void Bgt(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_gt(n2))
@@ -765,7 +760,6 @@ namespace CLRSharp
         public void Bgt_Un(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_gt_Un(n2))
@@ -781,7 +775,6 @@ namespace CLRSharp
         public void Ble(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_le(n2))
@@ -797,7 +790,6 @@ namespace CLRSharp
         public void Ble_Un(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_le_Un(n2))
@@ -813,7 +805,6 @@ namespace CLRSharp
         public void Blt(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_lt(n2))
@@ -829,7 +820,6 @@ namespace CLRSharp
         public void Blt_Un(int addr_index)
         {
             VBox n2 = stackCalc.Pop() as VBox;
-//            VBox n1 = stackCalc.Pop() as VBox;
             VBox n1 = stackCalc.Pop() as VBox;
 
             if (n1.logic_lt_Un(n2))
@@ -1045,11 +1035,11 @@ namespace CLRSharp
             if (n1 == null || n2 == null)
             //if (obj1 == null || obj2 == null)
             {
-                if(n1!=null)
+                if (n1 != null)
                 {
-                   n2 = ValueOnStack.MakeVBox(obj2.GetType());
-                   n2.SetDirect(obj2);
-                   beq = n1.logic_eq(n2);
+                    n2 = ValueOnStack.MakeVBox(obj2.GetType());
+                    n2.SetDirect(obj2);
+                    beq = n1.logic_eq(n2);
                 }
                 else if (n2 != null)
                 {
@@ -1141,21 +1131,30 @@ namespace CLRSharp
             _codepos++;
         }
 
-		//Modify by hjx
-		public VBox GetVBox(object obj)
-		{
-			VBox box = null;
+        //Modify by hjx
+        public VBox GetVBox(object obj)
+        {
+            VBox box = null;
             if (obj is VBox)
             {
-				box = obj as VBox;
+                box = obj as VBox;
             }
             else
             {
-				box = ValueOnStack.MakeVBox(obj.GetType());
-				box.SetDirect(obj);
-			}
-			return box;
-		}
+                box = ValueOnStack.MakeVBox(obj.GetType());
+                box.SetDirect(obj);
+            }
+            return box;
+        }
+
+
+
+
+
+
+
+
+
 
         public void Sub()
         {
@@ -1405,15 +1404,15 @@ namespace CLRSharp
             }
             else
             {
-				if(num1.GetType() == typeof(double))
-				{
-					//Modify by hjx
+                if (num1.GetType() == typeof(double))
+                {
+                    //Modify by hjx
                     stackCalc.Push((float)(double)num1);
                 }
                 else
-				{
-               		stackCalc.Push((float)num1);
-				}
+                {
+                    stackCalc.Push((float)num1);
+                }
             }
             _codepos++;
         }
