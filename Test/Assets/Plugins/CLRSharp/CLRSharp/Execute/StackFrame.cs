@@ -215,6 +215,8 @@ namespace CLRSharp
         }
         void FillArray(object array, byte[] bytes)
         {
+            if (bytes == null)
+                return;
             if (array is byte[])
             {
                 byte[] arr = array as byte[];
@@ -253,6 +255,7 @@ namespace CLRSharp
             {
                 int step = 2;
                 char[] arr = array as char[];
+                   
                 for (int i = 0; i < Math.Min(bytes.Length / step, arr.Length); i++)
                 {
                     arr[i] = (char)BitConverter.ToUInt16(bytes, i * step);
@@ -262,6 +265,7 @@ namespace CLRSharp
             {
                 int step = 4;
                 int[] arr = array as int[];
+              
                 for (int i = 0; i < bytes.Length / step; i++)
                 {
                     arr[i] = BitConverter.ToInt32(bytes, i * step);
@@ -400,7 +404,13 @@ namespace CLRSharp
             }
             if (_clrmethod.DeclaringType.FullName.Contains("System.Runtime.CompilerServices.RuntimeHelpers") && _clrmethod.Name.Contains("InitializeArray"))
             {
-                FillArray(_pp[0], _pp[1] as byte[]);
+                
+                byte[] bb = _pp[1] as byte[];
+                if(bb==null&&_pp[1] is CLRSharp.Field_Common_CLRSharp)
+                {
+                    bb = (_pp[1] as CLRSharp.Field_Common_CLRSharp).field.InitialValue;
+                }
+                FillArray(_pp[0], bb);
                 _codepos++;
                 return;
             }
@@ -1076,11 +1086,21 @@ namespace CLRSharp
         }
         public void Cgt_Un()
         {
-            VBox n2 = stackCalc.Pop() as VBox;
-            VBox n1 = stackCalc.Pop() as VBox;
+            object _n2 = stackCalc.Pop();
+            object _n1 = stackCalc.Pop();
+            if (_n2 == null)
+            {
+                stackCalc.Push(ValueOnStack.MakeVBoxBool(_n1!=null));
+                _codepos++;
+            }
+            else
+            {
+                VBox n2 = GetVBox(_n2);
+                VBox n1 = GetVBox(_n1);
 
-            stackCalc.Push(ValueOnStack.MakeVBoxBool(n1.logic_gt_Un(n2)));
-            _codepos++;
+                stackCalc.Push(ValueOnStack.MakeVBoxBool(n1.logic_gt_Un(n2)));
+                _codepos++;
+            }
         }
         public void Clt()
         {
@@ -1749,8 +1769,9 @@ namespace CLRSharp
             {
                 index = (int)indexobj;
             }
-            Object[] array = stackCalc.Pop() as Object[];
-            stackCalc.Push(array[index]);
+            Array array = stackCalc.Pop() as Array;
+            
+            stackCalc.Push(array.GetValue(index));
             _codepos++;
         }
         public void Stelem_I()
@@ -2007,9 +2028,15 @@ namespace CLRSharp
         public void Stelem_Any()
         {
             var value = stackCalc.Pop();
-            var index = (int)stackCalc.Pop();
-            var array = stackCalc.Pop() as Object[];
-            array[index] = value;
+            var obj = stackCalc.Pop();
+            int index = 0;
+            if(obj is VBox)
+            {
+                index = (obj as VBox).ToInt();
+            }
+            else index = (int)obj;
+            var array = stackCalc.Pop() as Array;
+            array.SetValue(value, index);
             _codepos++;
         }
 
@@ -2203,6 +2230,7 @@ namespace CLRSharp
             //string tfname = obj.FieldType.FullName;
             //var _type = context.environment.GetType(obj.DeclaringType.FullName, obj.Module);
             //var field = _type.GetField(obj.Name);
+
             stackCalc.Push(token);
             _codepos++;
         }

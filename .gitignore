@@ -54,3 +54,5 @@ Temporary Items
 *.csproj
 *.suo
 *.suo
+Test/Assembly-CSharp-firstpass.csproj
+Test/Test.sln
